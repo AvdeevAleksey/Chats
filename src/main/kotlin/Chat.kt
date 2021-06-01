@@ -1,8 +1,8 @@
 data class Chat(
-    val chatId: Int =0,
+    val chatId: Int = 0,
     val ownerId: Int,
     val userId: Int,
-    val messageViewedList: List<Message>,
-    val messageUnvisitedList: List<Message>
+    val messageViewedList: MutableList<Message>,
+    val messageUnvisitedList: MutableList<Message>
 ) {
 }
