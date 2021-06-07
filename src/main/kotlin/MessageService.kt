@@ -6,6 +6,9 @@ class MessageService: CrudService<Message> {
 
     override fun add(entity: Message): Int {
         if (chatService.chats.isNotEmpty()) {
+            if (chatService.chats.find { it -> it.ownerId == entity.authorId || it.userId == entity.messageRecipientId}) {
+
+            }
 
         } else {
             messages.add(messages.size, entity.copy(messageId = messages.size+1,chatService.chats.size+1))
