@@ -13,7 +13,8 @@ fun main() {
 //    println()
     val messageService: MessageService = MessageService()
     println(message = messageService.add(Message(0,0,1,2,"text")))
-    println(message = chatService.get())
     println(message = messageService.get())
+
+
 
 }

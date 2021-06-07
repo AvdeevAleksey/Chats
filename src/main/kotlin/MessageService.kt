@@ -1,13 +1,15 @@
 class MessageService: CrudService<Message> {
 
     private val messages = mutableListOf<Message>()
+    val chatService: ChatService = ChatService()
 
     override fun add(entity: Message): Int {
         val lastId = if (messages.isNotEmpty()) messages.last().messageId + 1 else 1
         messages.add(entity.copy(messageId = lastId))
         if (lastId == 1) {
-            val chatService: ChatService = ChatService()
             chatService.add(Chat(0, entity.authorId, entity.messageRecipientId, messages))
+        } else {
+            chatService.edit(Chat(entity.chatId, entity.authorId,entity.messageRecipientId, messages))
         }
         return messages.size
     }
