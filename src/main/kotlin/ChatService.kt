@@ -1,6 +1,6 @@
 class ChatService: CrudService <Chat> {
 
-    private val chats = mutableListOf<Chat>()
+    val chats = mutableListOf<Chat>()
 
     override fun add(entity: Chat): Int {
         val lastId = if (chats.isNotEmpty()) chats.last().chatId + 1 else 1
