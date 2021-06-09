@@ -6,21 +6,23 @@ class MessageService: CrudService<Message> {
 
     override fun add(entity: Message): Int {
         if (chatService.chats.isNotEmpty()) {
-            if (chatService.chats.find { it -> it.ownerId == entity.authorId || it.userId == entity.messageRecipientId}) {
-
+            val chat = chatService.chats.find { it ->
+                it.ownerId == entity.authorId &&
+                it.userId == entity.messageRecipientId ||
+                it.ownerId == entity.messageRecipientId &&
+                it.userId == entity.authorId
             }
-
+            if (chat != null) {
+                messages.add(messages.size, entity.copy(messageId = messages.last().messageId+1, chatId = chat.chatId))
+                chatService.edit(chat.copy(messages = messages.filter { it.chatId == chat.chatId } as MutableList<Message>))
+            } else {
+                messages.add(messages.size, entity.copy(messageId = messages.size+1, chatId = chatService.chats.size+1))
+                chatService.add(Chat(chatService.chats.size+1, entity.authorId, entity.messageRecipientId, messages.filter { it.chatId == chatService.chats.size+1} as MutableList<Message>))
+            }
         } else {
-            messages.add(messages.size, entity.copy(messageId = messages.size+1,chatService.chats.size+1))
+            messages.add(messages.size, entity.copy(messageId = messages.size+1, chatId = chatService.chats.size+1))
             chatService.add(Chat(0, entity.authorId, entity.messageRecipientId, messages))
         }
-//        val lastId = if (messages.isNotEmpty()) messages.last().messageId + 1 else 1
-//        messages.add(entity.copy(messageId = lastId, chatId = chatService.chats.size+1))
-//        if (lastId == 1) {
-//            chatService.add(Chat(0, entity.authorId, entity.messageRecipientId, messages))
-//        } else {
-//            chatService.edit(Chat(entity.chatId, entity.authorId,entity.messageRecipientId, messages))
-//        }
         return messages.size
     }
 
