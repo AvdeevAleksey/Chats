@@ -25,4 +25,8 @@ class ChatService: CrudService <Chat> {
     fun getUnreadChatsCount() {
         //TODO
     }
+
+    fun getChats(id: Int): List<Chat> {
+        //TODO
+    }
 }
