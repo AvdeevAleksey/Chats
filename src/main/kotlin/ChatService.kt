@@ -21,4 +21,8 @@ class ChatService: CrudService <Chat> {
     override fun get(): List<Chat> {
         return chats?: emptyList()
     }
+
+    fun getUnreadChatsCount() {
+        //TODO
+    }
 }
