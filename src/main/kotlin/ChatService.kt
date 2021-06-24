@@ -22,11 +22,11 @@ class ChatService: CrudService <Chat> {
         return chats?: emptyList()
     }
 
-    fun getUnreadChatsCount() {
-        //TODO
+    fun getUnreadChatsCount(userId: Int): Int {
+        return chats.count { it.ownerId == userId && it.messages.any { it -> !it.wasRead } }
     }
 
-    fun getChats(id: Int): List<Chat> {
-        //TODO
+    fun getChats(userId: Int): List<Chat> {
+        return (chats.filter {it.ownerId == userId} as MutableList<Chat>).all { it.messages.replaceAll { it -> it.copy(wasRead = true) } }
     }
 }
