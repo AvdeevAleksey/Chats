@@ -26,7 +26,11 @@ class ChatService: CrudService <Chat> {
         return chats.count { it.ownerId == userId && it.messages.any { it -> !it.wasRead } }
     }
 
-    fun getChats(userId: Int): List<Chat> {
-        return (chats.filter {it.ownerId == userId} as MutableList<Chat>).all { it.messages.replaceAll { it -> it.copy(wasRead = true) } }
+    fun getChats(userId: Int) = chats.filter {
+        it.ownerId == userId
+    }.map { chat ->
+        chat.messages.replaceAll { message ->
+            message.copy(wasRead = true)
+        }
     }
 }
