@@ -32,7 +32,6 @@ class MessageService: CrudService<Message> {
             it.messageId == id
         }
         if (messages.isEmpty()) {
-            val chatService: ChatService = ChatService()
             chatService.delete(chat)
         }
     }
@@ -42,6 +41,7 @@ class MessageService: CrudService<Message> {
     }
 
     override fun get(): List<Message> {
+        messages.replaceAll {message -> message.copy(wasRead = true)}
         return messages?: emptyList()
     }
 }

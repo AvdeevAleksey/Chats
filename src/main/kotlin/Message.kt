@@ -1,4 +1,4 @@
-import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date
+import java.time.Instant.now
 import java.util.*
 
 data class Message(
@@ -7,7 +7,7 @@ data class Message(
     val authorId: Int,
     val messageRecipientId: Int,
     val text: String,
-    val dateTime: String = date(),
+    val dateTime: String = now().toString(),
     val wasRead: Boolean = false
 ) {
 }

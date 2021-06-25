@@ -26,11 +26,20 @@ class ChatService: CrudService <Chat> {
         return chats.count { it.ownerId == userId && it.messages.any { it -> !it.wasRead } }
     }
 
-    fun getChats(userId: Int) = chats.filter {
-        it.ownerId == userId
-    }.map { chat ->
-        chat.messages.replaceAll { message ->
-            message.copy(wasRead = true)
+    fun getChats(userId: Int): List<Chat> {
+        return chats.filter { chat -> chat.userId == userId
+                chat.messages.any { message -> !message.wasRead}
         }
     }
+
+//    fun getChats(userId: Int): List<Chat> {
+//        chats.replaceAll { chat ->
+//            if (chat.ownerId == userId)
+//                chat.messages.replaceAll { message ->
+//                    message.copy(wasRead = true)
+//                }
+//            chat
+//        }
+//        return chats
+//    }
 }
