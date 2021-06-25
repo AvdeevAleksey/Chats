@@ -27,7 +27,7 @@ class ChatService: CrudService <Chat> {
     }
 
     fun getChats(userId: Int): List<Chat> {
-        return chats.filter { chat -> chat.userId == userId
+        return chats.filter { chat -> chat.userId == userId &&
                 chat.messages.any { message -> !message.wasRead}
         }
     }

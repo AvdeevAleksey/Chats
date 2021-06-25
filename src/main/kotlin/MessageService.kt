@@ -1,6 +1,6 @@
 class MessageService: CrudService<Message> {
 
-    private val messages = mutableListOf<Message>()
+    val messages = mutableListOf<Message>()
     val chatService: ChatService = ChatService()
     val userService: UserService = UserService()
 
