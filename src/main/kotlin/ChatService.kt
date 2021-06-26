@@ -22,12 +22,13 @@ class ChatService: CrudService <Chat> {
         return chats?: emptyList()
     }
 
+
     fun getUnreadChatsCount(userId: Int): Int {
-        return chats.count { it.ownerId == userId && it.messages.any { it -> !it.wasRead } }
+        return chats.count { chat -> chat.ownerId == userId && chat.messages.any { message -> !message.wasRead } }
     }
 
     fun getChats(userId: Int): List<Chat> {
-        return chats.filter { chat -> chat.userId == userId &&
+        return chats.filter { chat -> chat.ownerId == userId &&
                 chat.messages.any { message -> !message.wasRead}
         }
     }

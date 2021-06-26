@@ -50,17 +50,24 @@ internal class ChatServiceTest {
 
     @Test
     fun getUnreadChatsCount_test() {
-        val chatService: ChatService = ChatService()
         val messageService: MessageService = MessageService()
         val expected: Int = 2
-        messageService.add(Message(0,1,1,3,"",wasRead = true))
-        chatService.add(Chat(0,1,2))
-        chatService.add(Chat(2,1,3,messageService.messages))
-        chatService.add(Chat(3,1,4))
-        assert(chatService.getUnreadChatsCount(1) == expected)
+        messageService.add(Message(0,1,1,2,""))
+        messageService.add(Message(0,2,1,4,"",wasRead = true))
+        messageService.add(Message(0,3,1,3,""))
+        val result: Int = messageService.chatService.getUnreadChatsCount(1)
+        assert(result == expected)
     }
 
     @Test
-    fun getChats() {
+    fun getChats_test() {
+        val messageService: MessageService = MessageService()
+        val expected: Int = 2
+        messageService.add(Message(0,1,1,2,""))
+        messageService.add(Message(0,2,1,4,"",wasRead = true))
+        messageService.add(Message(0,3,1,3,""))
+        val result: Int = messageService.chatService.getChats(1).size
+        assert(result == expected)
     }
+
 }

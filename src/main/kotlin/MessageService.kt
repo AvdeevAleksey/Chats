@@ -37,11 +37,12 @@ class MessageService: CrudService<Message> {
     }
 
     override fun edit(entity: Message) {
-        messages[messages.indexOfFirst { it -> it.messageId == entity.messageId }] = entity
+        messages[messages.indexOfFirst { message -> message.messageId == entity.messageId }] = entity
     }
 
     override fun get(): List<Message> {
         messages.replaceAll {message -> message.copy(wasRead = true)}
         return messages?: emptyList()
     }
+
 }
